@@ -31,13 +31,14 @@ const HomepageScreen: React.FC<HomepageScreenProps> = ({
               <Grid item xs={12}>
                 <CreateRegistryCardButton onClick={onCreate} />
               </Grid>
-              {cards.map((card: RegistryType) => {
-                return (
-                  <Grid key={card.id} item xs={12}>
-                    <RegistryCard card={card} onDelete={onDelete} />
-                  </Grid>
-                );
-              })}
+              {cards &&
+                cards.map((card: RegistryType) => {
+                  return (
+                    <Grid key={card.id} item xs={12}>
+                      <RegistryCard card={card} onDelete={onDelete} />
+                    </Grid>
+                  );
+                })}
             </Grid>
           </Grid>
         </Grid>
