@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import registryReducer from "./reducers/RegistrySlice";
+import registriesReducer from "./reducers/registriesSlice";
+import registryReducer from "./reducers/registrySlice";
 
-const rootReducer = combineReducers({ registryReducer });
+const rootReducer = combineReducers({ registriesReducer, registryReducer });
 
 export const setupStore = () => {
   return configureStore({

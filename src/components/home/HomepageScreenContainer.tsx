@@ -1,45 +1,42 @@
 import React, { useCallback, useEffect } from "react";
-import HomepageScreen from "./HomepageScreen";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
+
 import {
-  createRegistries,
-  deleteRegistries,
-  fetchRegistries,
+  createRegistry,
+  deleteRegistry,
+  getRegistries,
 } from "store/reducers/ActionCreators";
-import { CircularProgress } from "@material-ui/core";
+
+import HomepageScreen from "./HomepageScreen";
 
 const HomepageScreenContainer = () => {
   const dispatch = useAppDispatch();
   const { isLoading, registries } = useAppSelector(
-    (state) => state.registryReducer
+    (state) => state.registriesReducer
   );
 
   const handleCreateRegistryCard = () => {
-    dispatch(createRegistries());
+    dispatch(createRegistry());
   };
 
   const handleDeleteRegistryCard = useCallback(
     (id: any) => {
-      dispatch(deleteRegistries(id));
+      dispatch(deleteRegistry(id));
     },
     [dispatch]
   );
 
   useEffect(() => {
-    dispatch(fetchRegistries());
+    dispatch(getRegistries());
   }, [dispatch]);
 
   return (
-    <>
-      {isLoading && <CircularProgress />}
-      {registries.data && (
-        <HomepageScreen
-          cards={registries.data}
-          onCreate={handleCreateRegistryCard}
-          onDelete={handleDeleteRegistryCard}
-        />
-      )}
-    </>
+    <HomepageScreen
+      cards={registries?.data}
+      isLoading={isLoading}
+      onCreate={handleCreateRegistryCard}
+      onDelete={handleDeleteRegistryCard}
+    />
   );
 };
 

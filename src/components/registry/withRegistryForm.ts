@@ -1,60 +1,62 @@
 import * as Yup from "yup";
+import { RegistryType } from "store/models";
 import withFormSubmission from "components/common/withFormSubmission";
 
 export interface IValues {
-  registry_name: string;
-  customer_link: string;
+  name: string;
+  link: string;
   type: string;
-  package_description: string;
-  sum: number;
+  description: string;
+  price: number;
   weight: number;
-  length: number;
+  lenght: number;
   width: number;
   height: number;
   sender_contacts: string;
-  delivery_payer: string;
-  payment_type: string;
+  payer: string;
+  paymentType: string;
   send_location: string;
   receiver: string;
   send_date: string;
 }
 
 export interface IProps {
+  registry?: RegistryType;
   onSubmit: (values: IValues) => void;
 }
 
 const withDetailsForm = withFormSubmission<IProps, IValues>({
   enableReinitialize: true,
   validationSchema: Yup.object({
-    registry_name: Yup.string(),
-    customer_link: Yup.string(),
+    name: Yup.string(),
+    link: Yup.string(),
     type: Yup.string(),
-    package_description: Yup.string(),
-    sum: Yup.number(),
+    description: Yup.string(),
+    price: Yup.number(),
     weight: Yup.number(),
-    length: Yup.number(),
+    lenght: Yup.number(),
     width: Yup.number(),
     height: Yup.number(),
     sender_contacts: Yup.string(),
-    delivery_payer: Yup.string(),
-    payment_type: Yup.string(),
+    payer: Yup.string(),
+    paymentType: Yup.string(),
     send_location: Yup.string(),
     receiver: Yup.string(),
     send_date: Yup.string(),
   }),
-  mapPropsToValues: () => ({
-    registry_name: "",
-    customer_link: "",
+  mapPropsToValues: ({ registry }) => ({
+    name: registry?.name || "",
+    link: registry?.link || "",
     type: "cargo",
-    package_description: "",
-    sum: 0,
-    weight: 0,
-    length: 0,
-    width: 0,
-    height: 0,
+    description: registry?.description || "",
+    price: registry?.price || 0,
+    weight: registry?.weight || 0,
+    lenght: registry?.lenght || 0,
+    width: registry?.width || 0,
+    height: registry?.height || 0,
     sender_contacts: "",
-    delivery_payer: "",
-    payment_type: "",
+    payer: registry?.payer || "",
+    paymentType: "",
     send_location: "",
     receiver: "",
     send_date: "",
