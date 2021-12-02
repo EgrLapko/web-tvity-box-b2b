@@ -17,13 +17,14 @@ export type GeneralListType<T> = {
 export type RegistryType = {
   id: number;
   name: string;
+  description: string;
   link: string;
   price: number;
   weight: number;
   lenght: number; // ASK API TO FIX MISTAKE
   width: number;
   height: number;
-  payer: number;
+  payer: string;
   paymentForm: string;
   deliveredAt: string;
   generatedAt: string;

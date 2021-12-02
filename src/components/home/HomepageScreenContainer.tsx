@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { CircularProgress } from "@material-ui/core";
-
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 
 import {
@@ -14,7 +12,7 @@ import HomepageScreen from "./HomepageScreen";
 const HomepageScreenContainer = () => {
   const dispatch = useAppDispatch();
   const { isLoading, registries } = useAppSelector(
-    (state) => state.registryReducer
+    (state) => state.registriesReducer
   );
 
   const handleCreateRegistryCard = () => {
@@ -33,14 +31,12 @@ const HomepageScreenContainer = () => {
   }, [dispatch]);
 
   return (
-    <>
-      {isLoading && <CircularProgress />}
-      <HomepageScreen
-        cards={registries?.data}
-        onCreate={handleCreateRegistryCard}
-        onDelete={handleDeleteRegistryCard}
-      />
-    </>
+    <HomepageScreen
+      cards={registries?.data}
+      isLoading={isLoading}
+      onCreate={handleCreateRegistryCard}
+      onDelete={handleDeleteRegistryCard}
+    />
   );
 };
 
