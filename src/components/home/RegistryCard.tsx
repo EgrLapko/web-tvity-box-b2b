@@ -1,8 +1,10 @@
 import React from "react";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
-import { Grid, Paper, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "components/common/Button";
+
+import { routes } from "utils/routing";
+import LinkComponent from "components/common/LinkComponent";
 
 interface RegistryCardProps {
   card: any;
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
-  const { name, link, amountOfReceivers } = card;
+  const { id, name, link, amountOfReceivers } = card;
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -74,6 +76,16 @@ const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
                     onClick={handleDelete}
                   >
                     Видалити
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    component={LinkComponent}
+                    {...routes.registry(id)}
+                  >
+                    Відкрити
                   </Button>
                 </Grid>
                 <Grid item>

@@ -14,7 +14,7 @@ const initialState: RegistryState = {
   error: null,
 };
 
-export const registriesSlice = createSlice({
+export const registrySlice = createSlice({
   name: "registry",
   initialState,
   reducers: {},
@@ -34,4 +34,4 @@ export const registriesSlice = createSlice({
   },
 });
 
-export default registriesSlice.reducer;
+export default registrySlice.reducer;
