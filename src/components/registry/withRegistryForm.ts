@@ -9,7 +9,7 @@ export interface IValues {
   description: string;
   price: number;
   weight: number;
-  lenght: number;
+  length: number;
   width: number;
   height: number;
   sender_contacts: string;
@@ -25,7 +25,7 @@ export interface IProps {
   onSubmit: (values: IValues) => void;
 }
 
-const withDetailsForm = withFormSubmission<IProps, IValues>({
+const withRegistryForm = withFormSubmission<IProps, IValues>({
   enableReinitialize: true,
   validationSchema: Yup.object({
     name: Yup.string(),
@@ -34,7 +34,7 @@ const withDetailsForm = withFormSubmission<IProps, IValues>({
     description: Yup.string(),
     price: Yup.number(),
     weight: Yup.number(),
-    lenght: Yup.number(),
+    length: Yup.number(),
     width: Yup.number(),
     height: Yup.number(),
     sender_contacts: Yup.string(),
@@ -51,7 +51,7 @@ const withDetailsForm = withFormSubmission<IProps, IValues>({
     description: registry?.description || "",
     price: registry?.price || 0,
     weight: registry?.weight || 0,
-    lenght: registry?.lenght || 0,
+    length: registry?.length || 0,
     width: registry?.width || 0,
     height: registry?.height || 0,
     sender_contacts: "",
@@ -66,4 +66,4 @@ const withDetailsForm = withFormSubmission<IProps, IValues>({
   },
 });
 
-export default withDetailsForm;
+export default withRegistryForm;

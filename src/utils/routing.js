@@ -27,8 +27,8 @@ export const routes = {
   home: () => buildRoute("/"),
   registry: (registryId) =>
     buildRoute("/registry/[registryId]", { registryId }),
-  receiversList: (registryId) =>
-    buildRoute("/registry/[registryId]/receivers-list", { registryId }),
+  receiver: (receiverId) =>
+    buildRoute("/receiver/[receiverId]", { receiverId }),
 };
 
 // export const redirectTo = async (res, { href, as }, pageProps = {}) => {

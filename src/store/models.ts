@@ -21,7 +21,7 @@ export type RegistryType = {
   link: string;
   price: number;
   weight: number;
-  lenght: number; // ASK API TO FIX MISTAKE
+  length: number;
   width: number;
   height: number;
   payer: string;
@@ -32,3 +32,5 @@ export type RegistryType = {
   updatedAt: string;
   amountOfReceivers: number;
 };
+
+export type IdType = string | number;

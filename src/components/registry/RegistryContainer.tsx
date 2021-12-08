@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { CircularProgress, Grid, Typography } from "@material-ui/core";
-
-import { getRegistry, updateRegistry } from "store/reducers/ActionCreators";
+import {
+  getRegistry,
+  updateRegistry,
+} from "store/reducers/registryReducer/registryActions";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import RegistryForm from "./RegistryForm";
 
@@ -10,7 +12,7 @@ const RegistryContainer = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { isLoading, registry } = useAppSelector(
+  const { isLoading, isUpdating, registry } = useAppSelector(
     (state) => state.registryReducer
   );
 
@@ -40,7 +42,11 @@ const RegistryContainer = () => {
         </Grid>
       ) : (
         <Grid item xs={10}>
-          <RegistryForm registry={registry} onSubmit={handleSubmit} />
+          <RegistryForm
+            registry={registry}
+            onSubmit={handleSubmit}
+            isSending={isUpdating}
+          />
         </Grid>
       )}
     </Grid>

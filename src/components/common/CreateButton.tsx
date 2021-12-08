@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconWithText from "components/common/IconWithText";
 
 interface CreateCardButtonProps {
+  text: string;
+  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -23,13 +25,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateRegistryCardButton: React.FC<CreateCardButtonProps> = ({ onClick }) => {
+const CreateButton: React.FC<CreateCardButtonProps> = ({
+  text,
+  disabled,
+  onClick,
+}) => {
   const classes = useStyles();
   return (
-    <ButtonBase onClick={onClick} className={classes.root}>
+    <ButtonBase onClick={onClick} className={classes.root} disabled={disabled}>
       <IconWithText
         icon={<AddBoxOutlinedIcon className={classes.buttonText} />}
-        text="Створити нову чернетку"
+        text={text}
         variant="subtitle2"
         className={classes.buttonText}
       />
@@ -37,4 +43,4 @@ const CreateRegistryCardButton: React.FC<CreateCardButtonProps> = ({ onClick }) 
   );
 };
 
-export default CreateRegistryCardButton;
+export default CreateButton;

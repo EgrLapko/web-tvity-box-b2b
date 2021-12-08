@@ -5,13 +5,13 @@ import {
   createRegistry,
   deleteRegistry,
   getRegistries,
-} from "store/reducers/ActionCreators";
+} from "store/reducers/registriesReducer/registriesActions";
 
 import HomepageScreen from "./HomepageScreen";
 
 const HomepageScreenContainer = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, registries } = useAppSelector(
+  const { isLoading, isCreating, registries } = useAppSelector(
     (state) => state.registriesReducer
   );
 
@@ -34,6 +34,7 @@ const HomepageScreenContainer = () => {
     <HomepageScreen
       cards={registries?.data}
       isLoading={isLoading}
+      isCreating={isCreating}
       onCreate={handleCreateRegistryCard}
       onDelete={handleDeleteRegistryCard}
     />

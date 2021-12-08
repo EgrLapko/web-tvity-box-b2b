@@ -1,16 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteRegistry, getRegistries } from "./ActionCreators";
+import {
+  createRegistry,
+  deleteRegistry,
+  getRegistries,
+} from "./registriesActions";
 
 // todo: fix types usage
 interface RegistriesState {
   registries: any;
   isLoading: boolean;
+  isCreating: boolean;
   error: any;
 }
 
 const initialState: RegistriesState = {
   registries: {},
   isLoading: false,
+  isCreating: false,
   error: null,
 };
 
@@ -42,6 +48,13 @@ export const registriesSlice = createSlice({
     },
     [deleteRegistry.rejected]: (state, action) => {
       state.error = action.payload;
+    },
+    [createRegistry.pending]: (state) => {
+      state.isCreating = true;
+      state.error = null;
+    },
+    [createRegistry.fulfilled]: (state) => {
+      state.isCreating = false;
     },
   },
 });

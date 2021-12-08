@@ -1,5 +1,6 @@
 import React from "react";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -37,7 +38,7 @@ const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="space-between">
-            <Grid item xs>
+            <Grid item>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Typography variant="subtitle1">{name}</Typography>
@@ -79,18 +80,18 @@ const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
                   </Button>
                 </Grid>
                 <Grid item>
+                  <Button variant="contained" color="secondary">
+                    <FileCopyOutlinedIcon />
+                  </Button>
+                </Grid>
+                <Grid item>
                   <Button
                     variant="contained"
                     color="secondary"
                     component={LinkComponent}
                     {...routes.registry(id)}
                   >
-                    Відкрити
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="contained" color="secondary">
-                    <FileCopyOutlinedIcon />
+                    <ExitToAppIcon />
                   </Button>
                 </Grid>
               </Grid>
