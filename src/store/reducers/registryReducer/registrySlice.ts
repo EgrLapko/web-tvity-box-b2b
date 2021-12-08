@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRegistry } from "./ActionCreators";
-import { RegistryType } from "../models";
+import { getRegistry, updateRegistry } from "./registryActions";
+import { RegistryType } from "store/models";
 
 interface RegistryState {
   registry?: RegistryType;
   isLoading: boolean;
+  isUpdating: boolean;
   error: any;
 }
 
 const initialState: RegistryState = {
   registry: undefined,
   isLoading: false,
+  isUpdating: false,
   error: null,
 };
 
@@ -30,6 +32,14 @@ export const registrySlice = createSlice({
     },
     [getRegistry.rejected]: (state, action) => {
       state.error = action.payload;
+    },
+    [updateRegistry.pending]: (state) => {
+      state.isUpdating = true;
+      state.error = null;
+    },
+    [updateRegistry.fulfilled]: (state) => {
+      state.isUpdating = false;
+      state.error = null;
     },
   },
 });

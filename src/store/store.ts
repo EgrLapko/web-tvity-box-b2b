@@ -1,12 +1,18 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import registriesReducer from "./reducers/registriesSlice";
-import registryReducer from "./reducers/registrySlice";
+import registriesReducer from "./reducers/registriesReducer/registriesSlice";
+import registryReducer from "./reducers/registryReducer/registrySlice";
+import receiverReducer from "./reducers/receiverReducer/receiverSlice";
 
-const rootReducer = combineReducers({ registriesReducer, registryReducer });
+const rootReducer = combineReducers({
+  registriesReducer,
+  registryReducer,
+  receiverReducer,
+});
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   });
 };
 

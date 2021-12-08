@@ -20,7 +20,7 @@ import Button from "components/common/Button";
 import StickyBottomContent from "components/common/StickyBottom/StickyBottomContent";
 import withRegistryForm, { IValues } from "./withRegistryForm";
 
-interface CorporateClientsFormProps {
+interface RegistryFormProps {
   onSubmit: (values: IValues) => void;
 }
 
@@ -42,7 +42,7 @@ const InputLabelProps = {
   shrink: true,
 };
 
-const CorporateClientsForm: React.FC<CorporateClientsFormProps> = (props) => {
+const RegistryForm: React.FC<RegistryFormProps> = (props) => {
   const classes = useStyles();
   return (
     <Form>
@@ -187,7 +187,7 @@ const CorporateClientsForm: React.FC<CorporateClientsFormProps> = (props) => {
                   <Grid item xs={12}>
                     <Field
                       fullWidth
-                      name="lenght"
+                      name="length"
                       variant="outlined"
                       component={FieldToTextField}
                       TextField={TextField}
@@ -398,6 +398,17 @@ const CorporateClientsForm: React.FC<CorporateClientsFormProps> = (props) => {
                   />
                 </Field>
               </Grid>
+              <Grid item xs={7}>
+                <Field
+                  label
+                  fullWidth
+                  variant="outlined"
+                  name="send_date"
+                  type="date"
+                  component={FieldToTextField}
+                  TextField={TextField}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -420,4 +431,4 @@ const CorporateClientsForm: React.FC<CorporateClientsFormProps> = (props) => {
   );
 };
 
-export default withRegistryForm(CorporateClientsForm);
+export default withRegistryForm(RegistryForm);
