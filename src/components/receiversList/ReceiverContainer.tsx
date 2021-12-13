@@ -5,7 +5,7 @@ import {
   createReceiver,
   getReceiver,
 } from "store/reducers/receiverReducer/receiverActions";
-import ReceiverContent from "./ReceiverContentForm";
+import ReceiverContent from "./ReceiverContent";
 
 const ReceiverContainer = () => {
   const router = useRouter();
@@ -31,6 +31,8 @@ const ReceiverContainer = () => {
 
   return (
     <ReceiverContent
+      receiversList={receiver?.data}
+      isLoading={isLoading}
       onSubmit={handleSubmitReceiver}
       onCreate={handleCreateReceiver}
     />

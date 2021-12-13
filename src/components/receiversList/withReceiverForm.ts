@@ -4,20 +4,20 @@ import withFormSubmission from "components/common/withFormSubmission";
 export interface ReceiverFormValues {
   last_name: string;
   first_name: string;
-  fathers_name: string;
-  tel: string;
+  patronymic: string;
+  phone: string;
   delivery_type: string;
   city: string;
-  np_dep: string;
+  warehouse: string;
 }
 
 export interface ReceiverFormProps {
+  key: any;
   receiver?: any;
-  onCreate: () => void;
   onSubmit: (values: ReceiverFormValues) => void;
 }
 
-const withRegistryForm = withFormSubmission<
+const withReceiverForm = withFormSubmission<
   ReceiverFormProps,
   ReceiverFormValues
 >({
@@ -25,24 +25,24 @@ const withRegistryForm = withFormSubmission<
   validationSchema: Yup.object({
     last_name: Yup.string(),
     first_name: Yup.string(),
-    fathers_name: Yup.string(),
-    tel: Yup.string(),
+    patronymic: Yup.string(),
+    phone: Yup.string(),
     delivery_type: Yup.string(),
     city: Yup.string(),
-    np_dep: Yup.string(),
+    warehouse: Yup.string(),
   }),
   mapPropsToValues: ({ receiver }) => ({
-    last_name: receiver?.name || "",
-    first_name: receiver?.link || "",
-    fathers_name: receiver?.fathers_name || "",
-    tel: receiver?.description || "",
-    delivery_type: receiver?.price || "",
-    city: receiver?.weight || "",
-    np_dep: receiver?.length || "",
+    last_name: receiver?.last_name || "",
+    first_name: receiver?.first_name || "",
+    patronymic: receiver?.patronymic || "",
+    phone: receiver?.phone || "",
+    delivery_type: receiver?.delivery_type || "",
+    city: receiver?.city || "",
+    warehouse: receiver?.warehouse || "",
   }),
   handleSubmit: (values, { props: { onSubmit } }) => {
     onSubmit(values);
   },
 });
 
-export default withRegistryForm;
+export default withReceiverForm;

@@ -5,7 +5,7 @@ import withFormSubmission from "components/common/withFormSubmission";
 export interface IValues {
   name: string;
   link: string;
-  type: string;
+  // type: string;
   description: string;
   price: number;
   weight: number;
@@ -14,7 +14,7 @@ export interface IValues {
   height: number;
   sender_contacts: string;
   payer: string;
-  paymentType: string;
+  paymentForm: string;
   send_location: string;
   receiver: string;
   send_date: string;
@@ -30,7 +30,7 @@ const withRegistryForm = withFormSubmission<IProps, IValues>({
   validationSchema: Yup.object({
     name: Yup.string(),
     link: Yup.string(),
-    type: Yup.string(),
+    // type: Yup.string(),
     description: Yup.string(),
     price: Yup.number(),
     weight: Yup.number(),
@@ -39,7 +39,7 @@ const withRegistryForm = withFormSubmission<IProps, IValues>({
     height: Yup.number(),
     sender_contacts: Yup.string(),
     payer: Yup.string(),
-    paymentType: Yup.string(),
+    paymentForm: Yup.string(),
     send_location: Yup.string(),
     receiver: Yup.string(),
     send_date: Yup.string(),
@@ -47,7 +47,7 @@ const withRegistryForm = withFormSubmission<IProps, IValues>({
   mapPropsToValues: ({ registry }) => ({
     name: registry?.name || "",
     link: registry?.link || "",
-    type: "cargo",
+    // type: "cargo",
     description: registry?.description || "",
     price: registry?.price || 0,
     weight: registry?.weight || 0,
@@ -56,7 +56,7 @@ const withRegistryForm = withFormSubmission<IProps, IValues>({
     height: registry?.height || 0,
     sender_contacts: "",
     payer: registry?.payer || "",
-    paymentType: "",
+    paymentForm: registry?.paymentForm || "",
     send_location: "",
     receiver: "",
     send_date: "",
