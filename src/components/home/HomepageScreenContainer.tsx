@@ -6,7 +6,7 @@ import {
   deleteRegistry,
   getRegistries,
 } from "store/reducers/registriesReducer/registriesActions";
-
+import { generateReceiver } from "store/reducers/receiverReducer/receiverActions";
 import HomepageScreen from "./HomepageScreen";
 
 const HomepageScreenContainer = () => {
@@ -25,6 +25,12 @@ const HomepageScreenContainer = () => {
     },
     [dispatch]
   );
+  const handleGenerateReceiver = useCallback(
+    (link: string) => {
+      dispatch(generateReceiver(link));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     dispatch(getRegistries());
@@ -35,6 +41,7 @@ const HomepageScreenContainer = () => {
       cards={registries?.data}
       isLoading={isLoading}
       isCreating={isCreating}
+      onGenerate={handleGenerateReceiver}
       onCreate={handleCreateRegistryCard}
       onDelete={handleDeleteRegistryCard}
     />

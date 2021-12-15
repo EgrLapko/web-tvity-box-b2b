@@ -17,6 +17,7 @@ interface HomepageScreenProps {
   isLoading: boolean;
   isCreating: boolean;
   onCreate: () => void;
+  onGenerate: (link: string) => void;
   onDelete: (id: number) => void;
 }
 
@@ -24,6 +25,7 @@ const HomepageScreen: React.FC<HomepageScreenProps> = ({
   cards,
   isLoading,
   isCreating,
+  onGenerate,
   onCreate,
   onDelete,
 }) => {
@@ -56,7 +58,11 @@ const HomepageScreen: React.FC<HomepageScreenProps> = ({
                     cards.map((card: RegistryType) => {
                       return (
                         <Grid key={card.id} item xs={12}>
-                          <RegistryCard card={card} onDelete={onDelete} />
+                          <RegistryCard
+                            card={card}
+                            onDelete={onDelete}
+                            onGenerate={onGenerate}
+                          />
                         </Grid>
                       );
                     })

@@ -19,8 +19,8 @@ const ReceiverContainer = () => {
     dispatch(createReceiver(router.query.receiverId));
   };
 
-  const handleSubmitReceiver = () => {
-    console.log("SUBMITTED");
+  const handleSubmitReceiver = (values: any) => {
+    console.log("SUBMITTED", values);
   };
 
   useEffect(() => {

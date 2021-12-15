@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CircularProgress,
   Grid,
@@ -16,12 +16,13 @@ import CreateButton from "components/common/CreateButton";
 import StickyBottomContent from "components/common/StickyBottom/StickyBottomContent";
 import Button from "components/common/Button";
 import ReceiverContentForm from "./ReceiverContentForm";
+import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 
 interface ReceiverContentProps {
   receiversList: any[];
   isLoading: boolean;
   onCreate: () => void;
-  onSubmit: () => void;
+  onSubmit: (values: any) => void;
 }
 
 const useStyles = makeStyles({
@@ -46,6 +47,20 @@ const headTableRows = [
   "Відділення НП або адреса доставки",
 ];
 
+const receiverItem = {
+  last_name: "",
+  first_name: "",
+  patronymic: "",
+  phone: "",
+  delivery_type: "",
+  city: "",
+  warehouse: "",
+};
+
+const initialValues = {
+  receivers: [receiverItem],
+};
+
 const ReceiverContent: React.FC<ReceiverContentProps> = ({
   receiversList,
   isLoading,
@@ -53,14 +68,6 @@ const ReceiverContent: React.FC<ReceiverContentProps> = ({
   onSubmit,
 }) => {
   const classes = useStyles();
-
-  const handleClick = () => {
-    onCreate();
-  };
-
-  const handleSubmit = () => {
-    onSubmit();
-  };
 
   return (
     <Grid container spacing={2}>
@@ -73,55 +80,83 @@ const ReceiverContent: React.FC<ReceiverContentProps> = ({
         </Typography>
       </Grid>
 
-      <Grid item xs={12}>
-        <CreateButton text="Додати отримувача" onClick={handleClick} />
-      </Grid>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => onSubmit(values)}
+      >
+        {({ values }) => (
+          <Form>
+            <FieldArray name="receivers">
+              {({ remove, push }) => {
+                const handleAddItem = () => {
+                  push(receiverItem);
+                };
 
-      <Grid item xs={12}>
-        <TableContainer component={Paper} className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.tableCell} />
-                {headTableRows.map((item) => {
-                  return (
-                    <TableCell
-                      key={item}
-                      align="left"
-                      className={classes.tableCell}
+                const handleRemoveItem = (index: any) => {
+                  remove(index);
+                };
+
+                return (
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <CreateButton
+                        text="Додати отримувача"
+                        onClick={handleAddItem}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TableContainer
+                        component={Paper}
+                        className={classes.root}
+                      >
+                        <Table className={classes.table}>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell className={classes.tableCell} />
+                              {headTableRows.map((item) => {
+                                return (
+                                  <TableCell
+                                    key={item}
+                                    align="left"
+                                    className={classes.tableCell}
+                                  >
+                                    {item}
+                                  </TableCell>
+                                );
+                              })}
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {values.receivers.length > 0 &&
+                              values.receivers.map((receiver, index) => (
+                                <ReceiverContentForm
+                                  key={index}
+                                  receiver={receiver}
+                                  index={index}
+                                  onRemove={handleRemoveItem}
+                                />
+                              ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Grid>
+
+                    <StickyBottomContent
+                      position="fixed"
+                      justifyContent="center"
                     >
-                      {item}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading ? (
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              ) : (
-                receiversList &&
-                receiversList.map((receiver) => {
-                  return (
-                    <ReceiverContentForm
-                      key={receiver.id}
-                      receiver={receiver}
-                      onSubmit={handleSubmit}
-                    />
-                  );
-                })
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Grid>
-      <StickyBottomContent position="fixed" justifyContent="center">
-        <Button variant="contained" color="primary" type="submit">
-          Зберегти 1
-        </Button>
-      </StickyBottomContent>
+                      <Button variant="contained" color="primary" type="submit">
+                        Зберегти {values.receivers.length}
+                      </Button>
+                    </StickyBottomContent>
+                  </Grid>
+                );
+              }}
+            </FieldArray>
+          </Form>
+        )}
+      </Formik>
     </Grid>
   );
 };
