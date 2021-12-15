@@ -9,6 +9,7 @@ import LinkComponent from "components/common/LinkComponent";
 
 interface RegistryCardProps {
   card: any;
+  onGenerate: (link: string) => void;
   onDelete: (id: number) => void;
 }
 
@@ -24,12 +25,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
+const RegistryCard: React.FC<RegistryCardProps> = ({
+  card,
+  onGenerate,
+  onDelete,
+}) => {
   const { id, name, link, amountOfReceivers } = card;
   const classes = useStyles();
 
   const handleDelete = () => {
-    onDelete(card.id);
+    onDelete(id);
+  };
+
+  const handleGenerate = () => {
+    onGenerate(link);
   };
 
   const hasReceivers = amountOfReceivers > 0;
@@ -66,7 +75,11 @@ const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
             <Grid item xs>
               <Grid container spacing={1} justify="flex-end">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleGenerate}
+                  >
                     Згенерувати
                   </Button>
                 </Grid>
@@ -98,9 +111,15 @@ const RegistryCard: React.FC<RegistryCardProps> = ({ card, onDelete }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField variant="outlined" fullWidth value={link} />
-        </Grid>
+        {typeof window !== "undefined" && (
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              value={`${window.location.href}receiver/${link}`}
+            />
+          </Grid>
+        )}
       </Grid>
     </Paper>
   );

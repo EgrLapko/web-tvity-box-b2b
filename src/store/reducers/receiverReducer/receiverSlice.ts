@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createReceiver, getReceiver } from "./receiverActions";
+import {
+  createReceiver,
+  generateReceiver,
+  getReceiver,
+} from "./receiverActions";
 
 interface ReceiverState {
   receiver: any;
@@ -43,6 +47,13 @@ export const receiverSlice = createSlice({
       state.error = null;
     },
     [createReceiver.fulfilled]: (state) => {
+      state.isCreating = false;
+    },
+    [generateReceiver.pending]: (state) => {
+      state.isCreating = true;
+      state.error = null;
+    },
+    [generateReceiver.fulfilled]: (state) => {
       state.isCreating = false;
     },
   },
