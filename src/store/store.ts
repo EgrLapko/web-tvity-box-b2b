@@ -2,11 +2,17 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import registriesReducer from "./reducers/registriesReducer/registriesSlice";
 import registryReducer from "./reducers/registryReducer/registrySlice";
 import receiverReducer from "./reducers/receiverReducer/receiverSlice";
+import citiesReducer from "./reducers/citiesReducer/citiesSlice";
+import warehouseReducer from "./reducers/warehouseReducer/warehouseSlice";
+import streetReducer from "./reducers/streetReducer/streetSlice";
 
 const rootReducer = combineReducers({
   registriesReducer,
   registryReducer,
   receiverReducer,
+  citiesReducer,
+  warehouseReducer,
+  streetReducer,
 });
 
 export const setupStore = () => {

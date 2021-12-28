@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getCities } from "./citiesActions";
 
 interface CitiesState {
-  result: any;
+  result: any[];
   isLoading: boolean;
   error: any;
 }
 
 const initialState: CitiesState = {
-  result: {},
+  result: [],
   isLoading: false,
   error: null,
 };
@@ -23,9 +23,15 @@ export const citiesSlice = createSlice({
       state.error = null;
     },
     [getCities.fulfilled]: (state, action) => {
+      const res = action.payload?.data;
+
       state.isLoading = false;
       state.error = null;
-      state.result = action.payload;
+
+      if (res && Array.isArray(res)) {
+        const data = res[0];
+        state.result = data?.Addresses || [];
+      }
     },
     [getCities.rejected]: (state, action) => {
       state.error = action.payload;
