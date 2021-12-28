@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   CircularProgress,
   Grid,
@@ -15,15 +15,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import CreateButton from "components/common/CreateButton";
 import StickyBottomContent from "components/common/StickyBottom/StickyBottomContent";
 import Button from "components/common/Button";
-import ReceiverContentForm from "./ReceiverContentForm";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-
-interface ReceiverContentProps {
-  receiversList: any[];
-  isLoading: boolean;
-  onCreate: () => void;
-  onSubmit: (values: any) => void;
-}
+import { Form, FieldArray, useFormikContext } from "formik";
+import ReceiverFormContainer from "./ReceiverFormContainer";
+import withReceiverContentForm, {
+  ReceiverContentFormValues,
+  ReceiverFormComponentProps,
+} from "./withReceiverContentForm";
 
 const useStyles = makeStyles({
   root: {
@@ -38,39 +35,41 @@ const useStyles = makeStyles({
 });
 
 const headTableRows = [
-  "Прізвище",
-  "Ім'я",
-  "По батькові",
-  "Телефон",
-  "Тип доставки",
-  "Місто",
-  "Відділення НП або адреса доставки",
+  { key: "", style: { width: 80 } },
+  { key: "Прізвище", style: { width: 180 } },
+  { key: "Ім'я", style: { width: 180 } },
+  { key: "По батькові", style: { width: 180 } },
+  { key: "Телефон", style: { width: 170 } },
+  { key: "Тип доставки", style: { width: 180 } },
+  { key: "Місто", style: { width: 350 } },
+  { key: "Відділення НП або адреса доставки", style: { width: 350 } },
 ];
 
 const receiverItem = {
-  last_name: "",
-  first_name: "",
+  lastName: "",
+  firstName: "",
   patronymic: "",
   phone: "",
-  delivery_type: "",
+  deliveryType: "",
+  street: "",
   city: "",
   warehouse: "",
 };
 
-const initialValues = {
-  receivers: [receiverItem],
-};
-
-const ReceiverContent: React.FC<ReceiverContentProps> = ({
+const ReceiverContent: React.FC<ReceiverFormComponentProps> = ({
   receiversList,
   isLoading,
-  onCreate,
-  onSubmit,
 }) => {
   const classes = useStyles();
+  const { values, setFieldValue } =
+    useFormikContext<ReceiverContentFormValues>();
+
+  useEffect(() => {
+    setFieldValue("receivers", receiversList || []);
+  }, [setFieldValue, receiversList]);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
         <Typography variant="h5" align="center">
           SoftServe
@@ -80,85 +79,78 @@ const ReceiverContent: React.FC<ReceiverContentProps> = ({
         </Typography>
       </Grid>
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => onSubmit(values)}
-      >
-        {({ values }) => (
-          <Form>
-            <FieldArray name="receivers">
-              {({ remove, push }) => {
-                const handleAddItem = () => {
-                  push(receiverItem);
-                };
+      {isLoading ? (
+        <Grid item>
+          <CircularProgress />
+        </Grid>
+      ) : (
+        <Form>
+          <FieldArray name="receivers">
+            {({ remove, push }) => {
+              const handleAddItem = () => {
+                push(receiverItem);
+              };
 
-                const handleRemoveItem = (index: any) => {
-                  remove(index);
-                };
+              const handleRemoveItem = (index: any) => {
+                remove(index);
+              };
 
-                return (
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <CreateButton
-                        text="Додати отримувача"
-                        onClick={handleAddItem}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <TableContainer
-                        component={Paper}
-                        className={classes.root}
-                      >
-                        <Table className={classes.table}>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell className={classes.tableCell} />
-                              {headTableRows.map((item) => {
-                                return (
-                                  <TableCell
-                                    key={item}
-                                    align="left"
-                                    className={classes.tableCell}
-                                  >
-                                    {item}
-                                  </TableCell>
-                                );
-                              })}
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {values.receivers.length > 0 &&
-                              values.receivers.map((receiver, index) => (
-                                <ReceiverContentForm
-                                  key={index}
-                                  receiver={receiver}
-                                  index={index}
-                                  onRemove={handleRemoveItem}
-                                />
-                              ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </Grid>
-
-                    <StickyBottomContent
-                      position="fixed"
-                      justifyContent="center"
-                    >
-                      <Button variant="contained" color="primary" type="submit">
-                        Зберегти {values.receivers.length}
-                      </Button>
-                    </StickyBottomContent>
+              return (
+                <Grid container>
+                  <Grid item xs={12}>
+                    <CreateButton
+                      text="Додати отримувача"
+                      onClick={handleAddItem}
+                    />
                   </Grid>
-                );
-              }}
-            </FieldArray>
-          </Form>
-        )}
-      </Formik>
+
+                  <Grid item xs={12}>
+                    <TableContainer component={Paper} className={classes.root}>
+                      <Table className={classes.table}>
+                        <TableHead>
+                          <TableRow>
+                            {headTableRows.map((item) => {
+                              return (
+                                <TableCell
+                                  key={item.key}
+                                  align="left"
+                                  style={item.style}
+                                  className={classes.tableCell}
+                                >
+                                  {item.key}
+                                </TableCell>
+                              );
+                            })}
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {values.receivers.length > 0 &&
+                            values.receivers.map((receiver, index) => (
+                              <ReceiverFormContainer
+                                key={index}
+                                receiver={receiver}
+                                index={index}
+                                onRemove={handleRemoveItem}
+                              />
+                            ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+
+                  <StickyBottomContent position="fixed" justifyContent="center">
+                    <Button variant="contained" color="primary" type="submit">
+                      Зберегти {values.receivers.length}
+                    </Button>
+                  </StickyBottomContent>
+                </Grid>
+              );
+            }}
+          </FieldArray>
+        </Form>
+      )}
     </Grid>
   );
 };
 
-export default ReceiverContent;
+export default withReceiverContentForm(ReceiverContent);

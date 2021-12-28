@@ -8,7 +8,7 @@ interface StreetState {
 }
 
 const initialState: StreetState = {
-  result: {},
+  result: [],
   isLoading: false,
   error: null,
 };
@@ -25,7 +25,7 @@ export const streetSlice = createSlice({
     [getStreet.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.result = action.payload;
+      state.result = action.payload.data || [];
     },
     [getStreet.rejected]: (state, action) => {
       state.error = action.payload;

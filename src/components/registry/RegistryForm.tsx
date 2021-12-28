@@ -85,30 +85,6 @@ const RegistryForm: React.FC<RegistryFormProps> = (props) => {
               </Grid>
             </Grid>
           </Grid>
-
-          {/*<Grid item xs={12}>*/}
-          {/*  <Grid container spacing={1}>*/}
-          {/*    <Grid item xs={12}>*/}
-          {/*      <Typography variant="subtitle2">Тип відправлення</Typography>*/}
-          {/*    </Grid>*/}
-          {/*    <Grid item xs={12}>*/}
-          {/*      <Field*/}
-          {/*        type*/}
-          {/*        component={FieldToRadioGroup}*/}
-          {/*        RadioGroup={RadioGroup}*/}
-          {/*        row*/}
-          {/*      >*/}
-          {/*        <FormControlLabel*/}
-          {/*          disabled*/}
-          {/*          checked*/}
-          {/*          label="Посилки та вантажі"*/}
-          {/*          control={<Radio color="primary" value="cargo" />}*/}
-          {/*        />*/}
-          {/*      </Field>*/}
-          {/*    </Grid>*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
-
           <Grid item xs={12}>
             <Grid container spacing={2}>
               <Grid item xs={8}>

@@ -1,22 +1,25 @@
-import React from "react";
-import { Field } from "formik";
+import React, { useState } from "react";
+import clsx from "clsx";
+import { Field, useFormikContext } from "formik";
 import CloseIcon from "@material-ui/icons/Close";
 import {
   MenuItem,
   TableCell,
   TableRow,
   TextField,
-  IconButton,
   Grid,
+  IconButton,
 } from "@material-ui/core";
-import { FieldToTextField } from "components/common/FormField";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
+import { FieldToTextField } from "components/common/FormField";
+import CitiesAutocomplete from "components/common/CitiesAutocomplete";
+import WarehouseAutocomplete from "components/common/WarehouseAutocomplete";
+import StreetAutocomplete from "components/common/StreetAutocomplete";
 
 interface ReceiverContentFormProps {
-  receiver: any;
   index: number;
-  onRemove: (index: any) => void;
+  receiver: any;
+  onRemove: (index: number) => void;
 }
 
 const SelectProps = {
@@ -56,6 +59,15 @@ const useStyles = makeStyles((theme) => ({
   buttonCell: {
     width: "5%",
   },
+  streetCell: {
+    width: "50%",
+  },
+  houseCell: {
+    width: "25%",
+  },
+  flatCell: {
+    width: "25%",
+  },
   action: {
     opacity: 0,
     transition: ".2s",
@@ -66,15 +78,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
-  receiver,
+const ReceiverFormContent: React.FC<ReceiverContentFormProps> = ({
   index,
+  receiver,
   onRemove,
 }) => {
   const classes = useStyles();
   const inputClasses = useInputStyles();
 
-  const { delivery_type } = receiver;
+  const { setFieldValue } = useFormikContext();
+
+  const [cityRef, setCityRef] = useState("");
 
   const handleRemoveItem = () => {
     onRemove(index);
@@ -102,7 +116,7 @@ const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
         <Field
           placeholder="Введіть прізвище *"
           fullWidth
-          name={`receivers.${index}.last_name`}
+          name={`receivers.${index}.lastName`}
           variant="outlined"
           component={FieldToTextField}
           TextField={TextField}
@@ -115,7 +129,7 @@ const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
         <Field
           placeholder="Введіть ім’я *"
           fullWidth
-          name={`receivers.${index}.first_name`}
+          name={`receivers.${index}.firstName`}
           variant="outlined"
           component={FieldToTextField}
           TextField={TextField}
@@ -155,7 +169,7 @@ const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
           label
           fullWidth
           variant="outlined"
-          name={`receivers.${index}.delivery_type`}
+          name={`receivers.${index}.deliveryType`}
           component={FieldToTextField}
           TextField={TextField}
           InputProps={{
@@ -170,72 +184,39 @@ const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
         </Field>
       </TableCell>
       <TableCell component="th" scope="row" className={classes.tableCell}>
-        <Field
-          label
-          fullWidth
-          variant="outlined"
-          name={`receivers.${index}.city`}
-          placeholder="Введіть місто *"
-          component={FieldToTextField}
-          TextField={TextField}
-          select
-          SelectProps={SelectProps}
-          InputLabelProps={InputLabelProps}
-          InputProps={{
-            classes: inputClasses,
-          }}
-        >
-          <MenuItem>Київ</MenuItem>
-          <MenuItem>Не Київ</MenuItem>
-          <MenuItem>Нє Київ</MenuItem>
-        </Field>
+        <CitiesAutocomplete
+          index={index}
+          setFieldValue={setFieldValue}
+          onSetCityRef={setCityRef}
+          city={receiver.city}
+        />
       </TableCell>
-      {delivery_type !== "address" ? (
+      {receiver?.deliveryType !== "address" ? (
         <TableCell component="th" scope="row" className={classes.tableCell}>
-          <Field
-            label
-            fullWidth
-            variant="outlined"
-            name={`receivers.${index}.warehouse`}
-            placeholder="Введіть номер відділення Нової Пошти *"
-            component={FieldToTextField}
-            TextField={TextField}
-            select
-            SelectProps={SelectProps}
-            InputLabelProps={InputLabelProps}
-            InputProps={{
-              classes: inputClasses,
-            }}
-          >
-            <MenuItem>2</MenuItem>
-            <MenuItem>5</MenuItem>
-            <MenuItem>10</MenuItem>
-          </Field>
+          <WarehouseAutocomplete
+            index={index}
+            setFieldValue={setFieldValue}
+            cityRef={cityRef}
+          />
         </TableCell>
       ) : (
         <div>
-          <TableCell component="th" scope="row" className={classes.tableCell}>
-            <Field
-              label
-              fullWidth
-              variant="outlined"
-              name={`receivers.${index}.street`}
-              placeholder="Введіть адресу"
-              component={FieldToTextField}
-              TextField={TextField}
-              select
-              SelectProps={SelectProps}
-              InputLabelProps={InputLabelProps}
-              InputProps={{
-                classes: inputClasses,
-              }}
-            >
-              <MenuItem>2</MenuItem>
-              <MenuItem>5</MenuItem>
-              <MenuItem>10</MenuItem>
-            </Field>
+          <TableCell
+            component="th"
+            scope="row"
+            className={clsx(classes.tableCell, classes.streetCell)}
+          >
+            <StreetAutocomplete
+              index={index}
+              setFieldValue={setFieldValue}
+              cityRef={cityRef}
+            />
           </TableCell>
-          <TableCell component="th" scope="row" className={classes.tableCell}>
+          <TableCell
+            component="th"
+            scope="row"
+            className={clsx(classes.tableCell, classes.houseCell)}
+          >
             <Field
               placeholder="Номер"
               fullWidth
@@ -248,7 +229,11 @@ const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
               }}
             />
           </TableCell>
-          <TableCell component="th" scope="row" className={classes.tableCell}>
+          <TableCell
+            component="th"
+            scope="row"
+            className={clsx(classes.tableCell, classes.flatCell)}
+          >
             <Field
               placeholder="Квартира"
               fullWidth
@@ -267,4 +252,4 @@ const ReceiverContentForm: React.FC<ReceiverContentFormProps> = ({
   );
 };
 
-export default ReceiverContentForm;
+export default ReceiverFormContent;

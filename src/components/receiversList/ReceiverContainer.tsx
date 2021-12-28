@@ -11,16 +11,14 @@ const ReceiverContainer = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { isLoading, receiver } = useAppSelector(
+  const { isLoading, receiver, isCreating } = useAppSelector(
     (state) => state.receiverReducer
   );
 
-  const handleCreateReceiver = () => {
-    dispatch(createReceiver(router.query.receiverId));
-  };
-
   const handleSubmitReceiver = (values: any) => {
-    console.log("SUBMITTED", values);
+    dispatch(
+      createReceiver({ id: router.query.receiverId, values: values.receivers })
+    );
   };
 
   useEffect(() => {
@@ -29,12 +27,18 @@ const ReceiverContainer = () => {
     }
   }, [dispatch, router.query.receiverId]);
 
+  // useEffect(() => {
+  //   if (!isCreating && isFulfilled) {
+  //     dispatch(getReceiver(router.query.receiverId));
+  //   }
+  // }, [dispatch, isCreating, isFulfilled, router.query.receiverId]);
+
   return (
     <ReceiverContent
       receiversList={receiver?.data}
       isLoading={isLoading}
+      isSending={isCreating}
       onSubmit={handleSubmitReceiver}
-      onCreate={handleCreateReceiver}
     />
   );
 };
