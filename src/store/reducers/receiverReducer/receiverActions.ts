@@ -51,3 +51,18 @@ export const generateReceiver: any = createAsyncThunk(
     }
   }
 );
+
+export const generateReceiver: any = createAsyncThunk(
+  "receiver/createReceiver",
+  async (id: IdType, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await fetch(
+        `https://b2b-uploader.mircloud.host/api/registry/${id}/generate`,
+        { method: "POST" }
+      );
+      const data = await response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
