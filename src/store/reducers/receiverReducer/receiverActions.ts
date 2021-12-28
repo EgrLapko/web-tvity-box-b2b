@@ -19,11 +19,15 @@ export const getReceiver: any = createAsyncThunk(
 
 export const createReceiver: any = createAsyncThunk(
   "receiver/createReceiver",
-  async (id: IdType, { rejectWithValue, dispatch }) => {
+  async (payload: any, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${id}/receiver`,
-        { method: "POST" }
+        `https://b2b-uploader.mircloud.host/api/registry/${payload.id}/receiver`,
+        {
+          method: "POST",
+          headers: { "Content-type": "applications/json;charset=UTF-8" },
+          body: JSON.stringify(payload.values),
+        }
       );
       const data = await response.json();
       dispatch(createNewReceiver({ data }));

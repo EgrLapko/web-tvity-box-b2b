@@ -8,7 +8,7 @@ interface WarehouseState {
 }
 
 const initialState: WarehouseState = {
-  result: {},
+  result: [],
   isLoading: false,
   error: null,
 };
@@ -25,7 +25,7 @@ export const warehouseSlice = createSlice({
     [getWarehouse.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.result = action.payload;
+      state.result = action.payload.data;
     },
     [getWarehouse.rejected]: (state, action) => {
       state.error = action.payload;

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getCities: any = createAsyncThunk(
-  "receiver/getReceiver",
+  "cities/getCities",
   async (city: string, { rejectWithValue }) => {
     try {
       const response = await fetch(

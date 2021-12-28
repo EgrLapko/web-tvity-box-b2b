@@ -8,7 +8,6 @@ import {
 interface ReceiverState {
   receiver: any;
   isLoading: boolean;
-  isUpdating: boolean;
   isCreating: boolean;
   error: any;
 }
@@ -16,7 +15,6 @@ interface ReceiverState {
 const initialState: ReceiverState = {
   receiver: undefined,
   isLoading: false,
-  isUpdating: false,
   isCreating: false,
   error: null,
 };
@@ -26,7 +24,7 @@ export const receiverSlice = createSlice({
   initialState,
   reducers: {
     createNewReceiver(state, action) {
-      state.receiver.data.push(action.payload.data);
+      state.receiver.data = action.payload.data;
     },
   },
   extraReducers: {
