@@ -4,16 +4,14 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
+import { LocalizationProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@material-ui/pickers/adapter/date-fns";
 import { setupStore } from "store/store";
-
-import Layout from "components/common/Navbar/Layout";
 import { ModalProvider } from "components/common/ModalManager";
 import theme from "theme";
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement!.removeChild(jssStyles);
@@ -34,11 +32,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <ModalProvider>
-            <Layout>
+          <LocalizationProvider dateAdapter={DateFnsUtils}>
+            <ModalProvider>
               <Component {...pageProps} />
-            </Layout>
-          </ModalProvider>
+            </ModalProvider>
+          </LocalizationProvider>
         </ThemeProvider>
       </Provider>
     </>

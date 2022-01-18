@@ -7,7 +7,7 @@ export const getReceiver: any = createAsyncThunk(
   async (id: IdType, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${id}/receiver`
+        `https://tviy.tech/api/registry/${id}/receiver`
       );
       const data = await response.json();
       return data;
@@ -20,9 +20,10 @@ export const getReceiver: any = createAsyncThunk(
 export const createReceiver: any = createAsyncThunk(
   "receiver/createReceiver",
   async (payload: any, { rejectWithValue, dispatch }) => {
+    console.log("PAYLOAD", payload);
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${payload.id}/receiver`,
+        `https://tviy.tech/api/registry/${payload.id}/receiver`,
         {
           method: "POST",
           headers: { "Content-type": "applications/json;charset=UTF-8" },
@@ -42,7 +43,7 @@ export const generateReceiver: any = createAsyncThunk(
   async (id: IdType, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${id}/generate`,
+        `https://tviy.tech/api/registry/${id}/generate`,
         { method: "POST" }
       );
       const data = await response.json();

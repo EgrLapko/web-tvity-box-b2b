@@ -1,15 +1,16 @@
-import React from "react";
-import { Container } from "@material-ui/core";
+import React, { ReactNode } from "react";
 import Navbar from "./Navbar";
 
-interface IProps {
+interface LayoutProps {
+  center?: ReactNode;
+  right?: ReactNode;
   children: React.ReactChild;
 }
 
-const Layout: React.FC<IProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ center, right, children }) => {
   return (
     <>
-      <Navbar />
+      <Navbar center={center} right={right} />
       <main>{children}</main>
     </>
   );

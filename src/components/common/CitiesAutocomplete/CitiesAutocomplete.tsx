@@ -12,17 +12,23 @@ interface CitiesAutocompleteProps {
   setFieldValue: (name: string, value: any) => void;
 }
 
-const useInputStyles = makeStyles({
+const useStyles = makeStyles({
   root: {
-    borderRadius: 0,
-    backgroundColor: "red",
-  },
-  notchedOutline: {
-    "$root:not(.focused) &": {
-      borderColor: "red !important",
+    "& .MuiOutlinedInput-root": {
+      backgroundColor: "transparent",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "unset",
     },
   },
 });
+
+const getOptionLabel = (option: any) => {
+  if (typeof option === "string") return option;
+  return option.present;
+};
+
+const filterOptions = (option: any) => option;
 
 const CitiesAutocomplete: React.FC<CitiesAutocompleteProps> = ({
   options,
@@ -32,12 +38,11 @@ const CitiesAutocomplete: React.FC<CitiesAutocompleteProps> = ({
   onSetCityRef,
   onGetOptions,
 }) => {
-  const inputClasses = useInputStyles();
+  const classes = useStyles();
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event: ChangeEvent<{}>, inputValue: string) => {
     setInputValue(inputValue);
-    console.log("INPUT VALUE", inputValue);
   };
 
   useEffect(() => {
@@ -46,12 +51,9 @@ const CitiesAutocomplete: React.FC<CitiesAutocompleteProps> = ({
     }
   }, [city, index, setFieldValue]);
 
-  console.log("CITY", city);
-  console.log("INPUT VALUE", inputValue);
-
   useEffect(() => {
     let timeout: any;
-    if (inputValue.length > 1) {
+    if (inputValue?.length > 1) {
       timeout = setTimeout(() => {
         onGetOptions(inputValue);
       }, 300);
@@ -67,8 +69,9 @@ const CitiesAutocomplete: React.FC<CitiesAutocompleteProps> = ({
       {...params}
       placeholder="Введіть місто *"
       name={`receivers.${index}.city`}
-      variant="outlined"
       autoComplete="off"
+      variant="outlined"
+      className={classes.root}
     />
   );
 
@@ -76,10 +79,11 @@ const CitiesAutocomplete: React.FC<CitiesAutocompleteProps> = ({
     <Autocomplete
       autoComplete
       filterSelectedOptions
-      // value={inputValue}
+      value={city}
       options={options}
       PaperComponent={Paper}
-      getOptionLabel={(option) => `${option?.present}`}
+      filterOptions={filterOptions}
+      getOptionLabel={getOptionLabel}
       onInputChange={handleInputChange}
       onChange={(e, value) => {
         setFieldValue(`receivers.${index}.city`, value?.present);

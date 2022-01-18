@@ -60,13 +60,15 @@ const useStyles = makeStyles((theme) => ({
     width: "5%",
   },
   streetCell: {
-    width: "50%",
+    width: "60%",
   },
   houseCell: {
-    width: "25%",
+    width: "20%",
+    padding: "unset",
   },
   flatCell: {
-    width: "25%",
+    width: "20%",
+    padding: "unset",
   },
   action: {
     opacity: 0,
@@ -180,7 +182,7 @@ const ReceiverFormContent: React.FC<ReceiverContentFormProps> = ({
           InputLabelProps={InputLabelProps}
         >
           <MenuItem value="address">На адресу</MenuItem>
-          <MenuItem value="branch">На відділення</MenuItem>
+          <MenuItem value="warehouse">На відділення</MenuItem>
         </Field>
       </TableCell>
       <TableCell component="th" scope="row" className={classes.tableCell}>
@@ -197,6 +199,7 @@ const ReceiverFormContent: React.FC<ReceiverContentFormProps> = ({
             index={index}
             setFieldValue={setFieldValue}
             cityRef={cityRef}
+            warehouse={receiver.warehouse}
           />
         </TableCell>
       ) : (
@@ -210,6 +213,7 @@ const ReceiverFormContent: React.FC<ReceiverContentFormProps> = ({
               index={index}
               setFieldValue={setFieldValue}
               cityRef={cityRef}
+              street={receiver.street}
             />
           </TableCell>
           <TableCell

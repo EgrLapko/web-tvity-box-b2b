@@ -5,7 +5,7 @@ export const getCities: any = createAsyncThunk(
   async (city: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/nova-poshta/cities?name=${city}`
+        `https://tviy.tech/api/nova-poshta/cities?name=${city}`
       );
       const data = await response.json();
       return data;

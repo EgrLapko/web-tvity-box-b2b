@@ -7,11 +7,12 @@ import WarehouseAutocomplete from "./WarehouseAutocomplete";
 interface WarehouseAutocompleteContainerProps {
   index: number;
   cityRef: string;
+  warehouse: string;
   setFieldValue: (name: string, value: any) => void;
 }
 
 const WarehouseAutocompleteContainer: React.FC<WarehouseAutocompleteContainerProps> =
-  ({ index, cityRef, setFieldValue }) => {
+  ({ index, cityRef, warehouse, setFieldValue }) => {
     const dispatch = useDispatch();
 
     const { result } = useAppSelector((state) => state.warehouseReducer);
@@ -31,6 +32,7 @@ const WarehouseAutocompleteContainer: React.FC<WarehouseAutocompleteContainerPro
       <WarehouseAutocomplete
         options={result}
         index={index}
+        warehouse={warehouse}
         onGetOptions={handleGetOptions}
         setFieldValue={setFieldValue}
       />

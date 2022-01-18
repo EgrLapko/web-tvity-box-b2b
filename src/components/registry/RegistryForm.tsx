@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FormControlLabel,
   Grid,
@@ -11,7 +11,8 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Field, Form } from "formik";
+import { DatePicker } from "@material-ui/pickers";
+import { Field, Form, useFormikContext } from "formik";
 import {
   FieldToRadioGroup,
   FieldToTextField,
@@ -42,8 +43,17 @@ const InputLabelProps = {
   shrink: true,
 };
 
-const RegistryForm: React.FC<RegistryFormProps> = (props) => {
+const RegistryForm: React.FC<RegistryFormProps> = () => {
   const classes = useStyles();
+
+  const { values, setFieldValue }: any = useFormikContext();
+
+  useEffect(() => {
+    if (values.send_date_radio === "date_created") {
+      setFieldValue("sendDate", `${new Date()}`);
+    }
+  }, [setFieldValue, values.send_date_radio]);
+
   return (
     <Form>
       <Paper className={classes.root}>
@@ -233,7 +243,7 @@ const RegistryForm: React.FC<RegistryFormProps> = (props) => {
                   label
                   fullWidth
                   variant="outlined"
-                  name="sender_contacts"
+                  name="senderContacts"
                   component={FieldToTextField}
                   TextField={TextField}
                   select
@@ -314,7 +324,7 @@ const RegistryForm: React.FC<RegistryFormProps> = (props) => {
                   label
                   fullWidth
                   variant="outlined"
-                  name="send_location"
+                  name="sendLocation"
                   component={FieldToTextField}
                   TextField={TextField}
                   select
@@ -359,7 +369,7 @@ const RegistryForm: React.FC<RegistryFormProps> = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <Field
-                  name="send_date"
+                  name="send_date_radio"
                   component={FieldToRadioGroup}
                   RadioGroup={RadioGroup}
                   row
@@ -376,13 +386,12 @@ const RegistryForm: React.FC<RegistryFormProps> = (props) => {
               </Grid>
               <Grid item xs={7}>
                 <Field
-                  label
-                  fullWidth
-                  variant="outlined"
-                  name="send_date"
-                  type="date"
-                  component={FieldToTextField}
-                  TextField={TextField}
+                  component={DatePicker}
+                  name="sendDate"
+                  renderInput={(props: any) => <TextField {...props} />}
+                  value={values.sendDate}
+                  onChange={(date: any) => setFieldValue("sendDate", date)}
+                  inputFormat="dd/MM/yyyy"
                 />
               </Grid>
             </Grid>
