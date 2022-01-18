@@ -32,43 +32,34 @@ const HomepageScreen: React.FC<HomepageScreenProps> = ({
   return (
     <Container maxWidth="md">
       <Box mt={4}>
-        <Grid container spacing={6} justify="center">
+        <Grid container spacing={1} justify="center">
           <Grid item xs={12}>
-            <Typography align="center" variant="h5">
-              Чорнові реєстри для B2B-клієнтів
-            </Typography>
+            <CreateButton
+              text="Створити нову чернетку"
+              disabled={isCreating}
+              onClick={onCreate}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Grid container spacing={1} justify="center">
-              <Grid item xs={12}>
-                <CreateButton
-                  text="Створити нову чернетку"
-                  disabled={isCreating}
-                  onClick={onCreate}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  {isLoading ? (
-                    <Grid item>
-                      <CircularProgress />
-                    </Grid>
-                  ) : (
-                    cards &&
-                    cards.map((card: RegistryType) => {
-                      return (
-                        <Grid key={card.id} item xs={12}>
-                          <RegistryCard
-                            card={card}
-                            onDelete={onDelete}
-                            onGenerate={onGenerate}
-                          />
-                        </Grid>
-                      );
-                    })
-                  )}
+            <Grid container spacing={1}>
+              {isLoading ? (
+                <Grid item>
+                  <CircularProgress />
                 </Grid>
-              </Grid>
+              ) : (
+                cards &&
+                cards.map((card: RegistryType) => {
+                  return (
+                    <Grid key={card.id} item xs={12}>
+                      <RegistryCard
+                        card={card}
+                        onDelete={onDelete}
+                        onGenerate={onGenerate}
+                      />
+                    </Grid>
+                  );
+                })
+              )}
             </Grid>
           </Grid>
         </Grid>

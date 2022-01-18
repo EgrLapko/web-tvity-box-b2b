@@ -5,7 +5,7 @@ export const getWarehouse: any = createAsyncThunk(
   async (ref: string, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/nova-poshta/warehouses?city_ref=${ref}`
+        `https://tviy.tech/api/nova-poshta/warehouses?city_ref=${ref}`
       );
       const data = await response.json();
       return data;

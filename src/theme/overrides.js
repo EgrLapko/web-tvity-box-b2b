@@ -84,7 +84,6 @@ const overrides = {
     },
     input: {
       padding: "16px",
-      // padding: "8px 16px",
       lineHeight: 1.6,
     },
     notchedOutline: {
@@ -92,7 +91,6 @@ const overrides = {
     },
     multiline: {
       padding: "16px",
-      // padding: "8px 16px",
     },
   },
   MuiInputLabel: {

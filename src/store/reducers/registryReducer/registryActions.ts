@@ -5,9 +5,7 @@ export const getRegistry: any = createAsyncThunk(
   "registry/getRegistry",
   async (id: IdType, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${id}/edit`
-      );
+      const response = await fetch(`https://tviy.tech/api/registry/${id}/edit`);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -21,7 +19,7 @@ export const updateRegistry: any = createAsyncThunk(
   async (payload: any, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${payload.id}/update`,
+        `https://tviy.tech/api/registry/${payload.id}/update`,
         {
           method: "PUT",
           headers: { "Content-type": "applications/json;charset=UTF-8" },

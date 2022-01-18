@@ -1,19 +1,3 @@
-export type GeneralListType<T> = {
-  currentPage?: number;
-  data?: T;
-  firstPageUrl?: string;
-  from?: number;
-  lastPage?: number;
-  lastPageUrl?: string;
-  links?: any[];
-  nextPageUrl?: string;
-  path?: string;
-  perPage?: number;
-  prevPageUrl?: string;
-  to?: number;
-  total?: number;
-};
-
 export type RegistryType = {
   id: number;
   name: string;
@@ -29,6 +13,7 @@ export type RegistryType = {
   deliveredAt: string;
   generatedAt: string;
   createdAt: string;
+  sendDate: string;
   updatedAt: string;
   amountOfReceivers: number;
 };

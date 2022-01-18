@@ -7,7 +7,7 @@ export const getRegistries: any = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://b2b-uploader.mircloud.host/api/registry"
+        "https://tviy.tech/api/registry"
       );
       const data = await response.json();
       return data;
@@ -21,7 +21,7 @@ export const deleteRegistry: any = createAsyncThunk(
   async (id: IdType, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        `https://b2b-uploader.mircloud.host/api/registry/${id}`,
+        `https://tviy.tech/api/registry/${id}`,
         { method: "DELETE" }
       );
       dispatch(removeRegistry({ id }));
@@ -35,7 +35,7 @@ export const createRegistry: any = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const response = await fetch(
-        "https://b2b-uploader.mircloud.host/api/registry",
+        "https://tviy.tech/api/registry",
         { method: "POST" }
       );
       const data = await response.json();

@@ -38,20 +38,21 @@ const withReceiverContentForm = withFormSubmission<
   ReceiverContentFormValues
 >({
   validationSchema: Yup.object({
-    receivers: Yup.array().of(
-      Yup.object().shape({
-        lastName: Yup.string().required("Last Name required"),
-        firstName: Yup.string().required("First Name required"),
-        patronymic: Yup.string(),
-        phone: Yup.string(),
-        deliveryType: Yup.string(),
-        city: Yup.string(),
-        street: Yup.string(),
-        flat: Yup.string(),
-        house: Yup.string(),
-        warehouse: Yup.string(),
-      })
-    ),
+    receivers: Yup.array(),
+    // receivers: Yup.array().of(
+    //     Yup.object().shape({
+    //       lastName: Yup.string().required("Last Name required"),
+    //       firstName: Yup.string().required("First Name required"),
+    //       patronymic: Yup.string(),
+    //       phone: Yup.string(),
+    //       deliveryType: Yup.string(),
+    //       city: Yup.string(),
+    //       street: Yup.string(),
+    //       flat: Yup.string(),
+    //       house: Yup.string(),
+    //       warehouse: Yup.string(),
+    //     })
+    // ),
   }),
   mapPropsToValues: ({ receiversList }) => ({
     receivers: receiversList || [],
