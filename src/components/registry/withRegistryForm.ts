@@ -17,7 +17,7 @@ export interface IValues {
   paymentForm: string;
   sendLocation: string;
   receiver: string;
-  sendDate: any;
+  deliveredAt: any;
 }
 
 export interface IProps {
@@ -41,7 +41,7 @@ const withRegistryForm = withFormSubmission<IProps, IValues>({
     paymentForm: Yup.string(),
     sendLocation: Yup.string(),
     receiver: Yup.string(),
-    sendDate: Yup.string(),
+    deliveredAt: Yup.string(),
     send_date_radio: Yup.string(),
   }),
   mapPropsToValues: ({ registry }) => ({
@@ -58,7 +58,7 @@ const withRegistryForm = withFormSubmission<IProps, IValues>({
     paymentForm: registry?.paymentForm || "",
     sendLocation: "",
     receiver: "",
-    sendDate: registry?.sendDate || null,
+    deliveredAt: registry?.deliveredAt || null,
     send_date_radio: "",
   }),
   handleSubmit: (values, { props: { onSubmit } }) => {

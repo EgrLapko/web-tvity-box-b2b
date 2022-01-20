@@ -17,10 +17,24 @@ export const getReceiver: any = createAsyncThunk(
   }
 );
 
+export const getReceiverName: any = createAsyncThunk(
+  "receiver/getReceiverName",
+  async (id: IdType, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://tviy.tech/api/registry/${id}/receiver/name`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const createReceiver: any = createAsyncThunk(
   "receiver/createReceiver",
   async (payload: any, { rejectWithValue, dispatch }) => {
-    console.log("PAYLOAD", payload);
     try {
       const response = await fetch(
         `https://tviy.tech/api/registry/${payload.id}/receiver`,

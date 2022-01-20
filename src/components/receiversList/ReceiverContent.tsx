@@ -57,6 +57,7 @@ const receiverItem = {
 };
 
 const ReceiverContent: React.FC<ReceiverFormComponentProps> = ({
+  title,
   receiversList,
   isLoading,
 }) => {
@@ -68,12 +69,16 @@ const ReceiverContent: React.FC<ReceiverFormComponentProps> = ({
     setFieldValue("receivers", receiversList || []);
   }, [setFieldValue, receiversList]);
 
+  console.log(values);
+
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
-        <Typography variant="h5" align="center">
-          SoftServe
-        </Typography>
+        {title && (
+          <Typography variant="h5" align="center">
+            {title}
+          </Typography>
+        )}
         <Typography variant="body2" align="center">
           Список отримувачів
         </Typography>

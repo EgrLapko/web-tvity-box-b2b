@@ -50,7 +50,7 @@ const RegistryForm: React.FC<RegistryFormProps> = () => {
 
   useEffect(() => {
     if (values.send_date_radio === "date_created") {
-      setFieldValue("sendDate", `${new Date()}`);
+      setFieldValue("deliveredAt", `${new Date()}`);
     }
   }, [setFieldValue, values.send_date_radio]);
 
@@ -387,10 +387,10 @@ const RegistryForm: React.FC<RegistryFormProps> = () => {
               <Grid item xs={7}>
                 <Field
                   component={DatePicker}
-                  name="sendDate"
+                  name="deliveredAt"
                   renderInput={(props: any) => <TextField {...props} />}
-                  value={values.sendDate}
-                  onChange={(date: any) => setFieldValue("sendDate", date)}
+                  value={values.deliveredAt}
+                  onChange={(date: any) => setFieldValue("deliveredAt", date)}
                   inputFormat="dd/MM/yyyy"
                 />
               </Grid>

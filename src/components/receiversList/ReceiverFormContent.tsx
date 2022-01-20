@@ -197,9 +197,9 @@ const ReceiverFormContent: React.FC<ReceiverContentFormProps> = ({
         <TableCell component="th" scope="row" className={classes.tableCell}>
           <WarehouseAutocomplete
             index={index}
-            setFieldValue={setFieldValue}
             cityRef={cityRef}
             warehouse={receiver.warehouse}
+            setFieldValue={setFieldValue}
           />
         </TableCell>
       ) : (

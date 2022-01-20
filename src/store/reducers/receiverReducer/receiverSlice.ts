@@ -3,10 +3,12 @@ import {
   createReceiver,
   generateReceiver,
   getReceiver,
+  getReceiverName,
 } from "./receiverActions";
 
 interface ReceiverState {
   receiver: any;
+  receiverName: any;
   isLoading: boolean;
   isCreating: boolean;
   error: any;
@@ -14,6 +16,7 @@ interface ReceiverState {
 
 const initialState: ReceiverState = {
   receiver: undefined,
+  receiverName: "",
   isLoading: false,
   isCreating: false,
   error: null,
@@ -38,6 +41,18 @@ export const receiverSlice = createSlice({
       state.receiver = action.payload;
     },
     [getReceiver.rejected]: (state, action) => {
+      state.error = action.payload;
+    },
+    [getReceiverName.pending]: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    [getReceiverName.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.receiverName = action.payload;
+    },
+    [getReceiverName.rejected]: (state, action) => {
       state.error = action.payload;
     },
     [createReceiver.pending]: (state) => {
