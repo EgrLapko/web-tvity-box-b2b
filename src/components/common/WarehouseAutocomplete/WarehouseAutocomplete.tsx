@@ -83,6 +83,7 @@ const WarehouseAutocomplete: React.FC<WarehouseAutocompleteProps> = ({
       onInputChange={handleInputChange}
       onChange={(e, value) => {
         setFieldValue(`receivers.${index}.warehouse`, value.description);
+        setFieldValue(`receivers.${index}.warehouseNumber`, value.number);
       }}
       renderInput={renderInput}
     />

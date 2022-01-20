@@ -16,6 +16,7 @@ export type ReceiverType = {
   warehouse: string;
   createdAt: string;
   updatedAt: string;
+  warehouseNumber: string;
 };
 
 export interface ReceiverContentFormValues {
@@ -24,6 +25,7 @@ export interface ReceiverContentFormValues {
 
 export interface ReceiverContentFormProps {
   receiversList?: ReceiverType[];
+  title?: string;
   isLoading: boolean;
   onSubmit: (values: ReceiverContentFormValues) => void;
 }

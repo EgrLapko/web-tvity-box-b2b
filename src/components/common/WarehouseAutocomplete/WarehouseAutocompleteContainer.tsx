@@ -33,8 +33,8 @@ const WarehouseAutocompleteContainer: React.FC<WarehouseAutocompleteContainerPro
         options={result}
         index={index}
         warehouse={warehouse}
-        onGetOptions={handleGetOptions}
         setFieldValue={setFieldValue}
+        onGetOptions={handleGetOptions}
       />
     );
   };

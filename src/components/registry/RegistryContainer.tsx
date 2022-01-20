@@ -17,6 +17,7 @@ import {
 } from "store/reducers/registryReducer/registryActions";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import Layout from "components/common/Navbar/Layout";
+import AbsoluteLoader from "components/common/AbsoluteLoader";
 import RegistryForm from "./RegistryForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +86,7 @@ const RegistryContainer = () => {
       <Container maxWidth="md">
         <Box mt={4}>
           <Grid container spacing={4} justify="center">
+            {isUpdating && <AbsoluteLoader />}
             <Grid item xs={12}>
               <Typography align="center" variant="h5">
                 Вкажіть дані для накладних

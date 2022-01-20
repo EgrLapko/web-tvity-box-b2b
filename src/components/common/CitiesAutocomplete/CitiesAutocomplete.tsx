@@ -87,6 +87,7 @@ const CitiesAutocomplete: React.FC<CitiesAutocompleteProps> = ({
       onInputChange={handleInputChange}
       onChange={(e, value) => {
         setFieldValue(`receivers.${index}.city`, value?.present);
+        setFieldValue(`receivers.${index}.cityName`, value?.mainDescription);
         onSetCityRef(value?.deliveryCity);
       }}
       renderInput={renderInput}

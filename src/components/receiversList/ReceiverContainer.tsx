@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "hooks/redux";
 import {
   createReceiver,
   getReceiver,
+  getReceiverName,
 } from "store/reducers/receiverReducer/receiverActions";
 import ReceiverContent from "./ReceiverContent";
 
@@ -11,7 +12,7 @@ const ReceiverContainer = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { isLoading, receiver, isCreating } = useAppSelector(
+  const { isLoading, receiver, receiverName, isCreating } = useAppSelector(
     (state) => state.receiverReducer
   );
 
@@ -27,15 +28,16 @@ const ReceiverContainer = () => {
     }
   }, [dispatch, router.query.receiverId]);
 
-  // useEffect(() => {
-  //   if (!isCreating && isFulfilled) {
-  //     dispatch(getReceiver(router.query.receiverId));
-  //   }
-  // }, [dispatch, isCreating, isFulfilled, router.query.receiverId]);
+  useEffect(() => {
+    if (router.query.receiverId) {
+      dispatch(getReceiverName(router.query.receiverId));
+    }
+  }, [dispatch, router.query.receiverId]);
 
   return (
     <ReceiverContent
       receiversList={receiver?.data}
+      title={receiverName?.registryName}
       isLoading={isLoading}
       isSending={isCreating}
       onSubmit={handleSubmitReceiver}
