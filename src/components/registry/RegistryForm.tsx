@@ -20,6 +20,7 @@ import {
 import Button from "components/common/Button";
 import StickyBottomContent from "components/common/StickyBottom/StickyBottomContent";
 import withRegistryForm, { IValues } from "./withRegistryForm";
+import { format } from "date-fns";
 
 interface RegistryFormProps {
   onSubmit: (values: IValues) => void;
@@ -50,7 +51,7 @@ const RegistryForm: React.FC<RegistryFormProps> = () => {
 
   useEffect(() => {
     if (values.send_date_radio === "date_created") {
-      setFieldValue("deliveredAt", `${new Date()}`);
+      setFieldValue("deliveredAt", `${new Date().toISOString()}`);
     }
   }, [setFieldValue, values.send_date_radio]);
 
